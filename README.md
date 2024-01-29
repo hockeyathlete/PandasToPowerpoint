@@ -21,7 +21,7 @@ df_to_powerpoint(
 ## Installation
 
 ```bash
-git clone https://github.com/robintw/PandasToPowerpoint.git
+git clone https://github.com/hockeyathlete/PandasToPowerpoint.git
 cd PandasToPowerpoint
 pip install --upgrade pip # optional (depends on setup)
 pip install -r requirements.txt
