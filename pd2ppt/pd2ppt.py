@@ -203,9 +203,14 @@ def df_to_table(slide, df, left=None, top=None, width=None, height=None,
     if colnames is None:
         colnames = list(df.columns)
 
-    # Insert the column names
+     # Insert the column names
     for col_index, col_name in enumerate(colnames):
-        shp.table.cell(0,col_index).text = col_name
+        col_cell = shp.table.cell(0,col_index)
+        col_cell.text = col_name
+        for paragraph in col_cell.text_frame.paragraphs:
+            for run in paragraph.runs:
+                run.font.size = Pt(12)
+                run.font.bold = True
 
     m = df.values
 
@@ -218,7 +223,11 @@ def df_to_table(slide, df, left=None, top=None, width=None, height=None,
             else:
                 text = _do_formatting(val, col_formatters[col])
 
-            shp.table.cell(row+1, col).text = text
+            cell = shp.table.cell(row+1, col)
+            cell.text = text
+            for paragraph in cell.text_frame.paragraphs:
+                for run in paragraph.runs:
+                    run.font.size = Pt(12)
 
     if name is not None:
         shp.name = name
