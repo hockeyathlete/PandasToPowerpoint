@@ -58,3 +58,6 @@ docs/_build/
 target/
 
 *.pptx
+/.idea/modules.xml
+/.idea/PandasToPowerpoint.iml
+/.idea/inspectionProfiles/profiles_settings.xml
