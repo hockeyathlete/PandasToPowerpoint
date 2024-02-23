@@ -206,7 +206,10 @@ def df_to_table(slide, df, left=None, top=None, width=None, height=None,
      # Insert the column names
     for col_index, col_name in enumerate(colnames):
         col_cell = shp.table.cell(0,col_index)
-        col_cell.text = col_name
+        if col_name == 'reason_code':
+            col_cell.text = 'Reasons'
+        else:
+            col_cell.text = col_name.capitalize()
         for paragraph in col_cell.text_frame.paragraphs:
             for run in paragraph.runs:
                 run.font.size = Pt(12)
@@ -218,13 +221,18 @@ def df_to_table(slide, df, left=None, top=None, width=None, height=None,
         for col in range(cols):
             val = m[row, col]
 
-            if col_formatters is None:
-                text = str(val)
-            else:
-                text = _do_formatting(val, col_formatters[col])
+            # if col_formatters is None:
+            #     text = str(val)
+            # else:
+            #     text = _do_formatting(val, col_formatters[col])
 
             cell = shp.table.cell(row+1, col)
-            cell.text = text
+            if type(val) == pd.Timestamp:
+                cell.text = str(val.strftime('%Y-%m-%d'))
+            elif type(val) == list:
+                cell.text = ', '.join(item for item in val if isinstance(item, str))
+            else:
+                cell.text = str(val)
             for paragraph in cell.text_frame.paragraphs:
                 for run in paragraph.runs:
                     run.font.size = Pt(12)
